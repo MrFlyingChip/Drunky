@@ -1,13 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
-class Drink(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=1000)
-    votes = models.IntegerField(default=0)
-
-
 class Image(models.Model):
     image = models.ImageField()
 
@@ -22,3 +17,25 @@ class Country(models.Model):
 
 class CocktailType(models.Model):
     name = models.CharField(max_length=50)
+
+
+class Comment(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    text = models.CharField(max_length=1000)
+    date = models.DateField(verbose_name="Date", null=False, auto_now=True)
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)
+    votes = models.IntegerField(default=0)
+    images = models.ManyToManyField(Image)
+    comments = models.ManyToManyField(Comment)
+
+
+class Drink(models.Model):
+    drinkType = models.ForeignKey(CocktailType)
+
+
+
+
