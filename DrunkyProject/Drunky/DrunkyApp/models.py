@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Drink(models.Model):
     name = models.CharField(max_length=50)
@@ -9,3 +10,15 @@ class Drink(models.Model):
 
 class Image(models.Model):
     image = models.ImageField()
+
+
+class DrinkType(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class CocktailType(models.Model):
+    name = models.CharField(max_length=50)
