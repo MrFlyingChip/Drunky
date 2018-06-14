@@ -1,0 +1,34 @@
+.drop-down-menu .drop-down-content{
+    display: none;
+    user-select: none;
+    padding: 10px 10px;
+}
+
+.drop-down-title{
+    cursor: pointer;
+    user-select: none;
+}
+
+.drop-down-close{
+    cursor: pointer;
+}
+
+.drop-down-close:hover{
+    color: #87433c;
+}
+
+.drop-down-menu .drop-down-title::before{
+    content: '▶ ';
+}
+
+.drop-down-menu .drop-down-title:hover{
+    color: #87433c;
+}
+
+.drop-down-menu.open .drop-down-title::before {
+    content: '▼ ';
+}
+
+.drop-down-menu.open .drop-down-content {
+    display: block;
+}

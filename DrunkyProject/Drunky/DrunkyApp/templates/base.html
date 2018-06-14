@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="static/css/header.css">
-    <link rel="stylesheet" type="text/css" href="static/css/footer.css">
-    <link rel="stylesheet" type="text/css" href="static/css/form.css">
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|Pacifico|Roboto" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -15,7 +16,7 @@
 <header>
     <nav class="menu">
         <ul class="nav-container">
-            <li><a href="" class="nav-button logo">Drunky</a></li>
+            <li><a href="/" class="nav-button logo">Drunky</a></li>
             <li><a href="/drinks" class="nav-button">Drinks</a></li>
             <li><a href="/cocktails" class="nav-button">Coctails</a></li>
             <li><a href="/bars" class="nav-button">Bars</a></li>
@@ -23,7 +24,8 @@
         </ul>
 
         <ul class="nav-container-aside-right">
-            <img src="static/images/baseline_input_white_24dp.png">
+            {% load staticfiles %}
+            <img src="{% static 'images/baseline_input_white_24dp.png' %}">
             <li><a href="/login" class="nav-button">Log in</a></li>
         </ul>
     </nav>
@@ -36,7 +38,7 @@
     <div class="footer-menu">
         <nav class="vertical-nav">
             <ul>
-                <li><a href="" class="nav-link logo">Drunky</a></li>
+                <li><a href="/" class="nav-link logo">Drunky</a></li>
                 <li><a href="/drinks" class="nav-link">Drinks</a></li>
                 <li><a href="/cocktails" class="nav-link">Coctails</a></li>
                 <li><a href="/bars" class="nav-link">Bars</a></li>

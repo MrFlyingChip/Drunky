@@ -10,4 +10,7 @@ admin.site.register(CocktailType)
 admin.site.register(Comment)
 admin.site.register(Product)
 admin.site.register(Drink)
+admin.site.register(Tool)
+admin.site.register(Cocktail)
+admin.site.register(Ingredient)
 

@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from .models import *
 
 
 def index(request):
@@ -7,7 +8,8 @@ def index(request):
 
 
 def drinks(request):
-    return HttpResponse("Hello drinks!")
+    drinkTypes = DrinkType.objects.all()
+    return render(request, 'en/drinks.html', {'drinkTypes': drinkTypes})
 
 
 def cocktails(request):

@@ -38,6 +38,9 @@
 	padding-left: 20px;
 }
 
+.checkbox{
+	display: block;
+}
 .checkbox input {
   display: none
 }
