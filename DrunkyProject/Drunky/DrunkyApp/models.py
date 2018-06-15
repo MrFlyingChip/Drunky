@@ -88,7 +88,8 @@ class Cocktail(Product):
 
 
 class Account(User):
-    
+    photo = models.ForeignKey(Image, on_delete=models.CASCADE)
+
 
 
 

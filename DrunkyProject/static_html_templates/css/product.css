@@ -77,10 +77,12 @@ a{
     padding: 50px;
 }
 
-.text{
-    padding: 20px 40px;
+.underlined-text{
+    text-decoration: underline;
 }
 
-.underlined-text{
-    border-bottom: 2px solid black;
+.product-composition{
+    display: flex;
+    justify-content: space-between;
+    vertical-align: bottom;
 }

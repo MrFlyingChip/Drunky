@@ -38,18 +38,18 @@ main{
 }
 
 .column{
-	width: 50%;
+	width: 45%;
 
 }
 
-.header-text-18pt{
-	margin: 20px 0;
+.text-normal-18pt{
 	font-size: 18pt;
-	font-weight: bold;
+	color: black;
 }
 
 .text-normal{
 	font-size: 14pt;
+	color: black;
 }
 
 .text-center{
