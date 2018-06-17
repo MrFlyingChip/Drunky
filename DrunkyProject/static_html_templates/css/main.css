@@ -22,6 +22,10 @@ main{
 	font-weight: bold;
 }
 
+section{
+	margin-top: 30px;
+}
+
 .header-text-18pt{
 	padding: 0px 0px;
 	font-size: 18pt;

@@ -87,8 +87,28 @@ class Cocktail(Product):
     tools = models.ManyToManyField(Tool)
 
 
+class Bar(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)
+    likes = models.IntegerField(default=0)
+    images = models.ManyToManyField(Image)
+    comments = models.ManyToManyField(Comment)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
+    address = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=50)
+    weekday_text = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.name
+
+
 class Account(User):
     photo = models.ForeignKey(Image, on_delete=models.CASCADE)
+    favouriteDrinks = models.ManyToManyField(Drink)
+    favouriteCocktails = models.ManyToManyField(Cocktail)
+    favouriteBars = models.ManyToManyField(Bar)
+
 
 
 

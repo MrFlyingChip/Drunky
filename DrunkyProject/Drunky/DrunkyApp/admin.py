@@ -13,4 +13,6 @@ admin.site.register(Drink)
 admin.site.register(Tool)
 admin.site.register(Cocktail)
 admin.site.register(Ingredient)
+admin.site.register(Account)
+admin.site.register(Bar)
 
