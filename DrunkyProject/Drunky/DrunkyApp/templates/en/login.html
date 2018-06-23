@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Drunky - login{% endblock %}
+
+{% block main %}
+    <p class="header-text-24pt">Log In Page</p>
+    <section class="container">
+        <div class="column column-center">
+            <p class="text-normal text-center">Connect to people who like alcohol drinks! Search for the favourite coctailes and bars, pick up your friends and hang out with them!</p>
+            <p class="header-text-18pt text-center">Let`s party the world!</p>
+        </div>
+
+        <div class="column">
+            <form method="post" action="{% url "sign_up" %}">
+                {% csrf_token %}
+                <p class="form-header">Sign up if you don`t have an account</p>
+                <input type="email" name="email" autocomplete="on" placeholder="Email" required class="input-field-form">
+                <input type="text" name="username" autocomplete="on" placeholder="Username" required class="input-field-form">
+                <input type="password" name="password" autocomplete="on" placeholder="Password" required class="input-field-form">
+                <input type="submit" class="button-form" value="Sign Up" />
+            </form>
+            <form method="post" action="{% url "login" %}">
+                {% csrf_token %}
+                <p class="form-header">Have an account? Log in</p>
+                <input type="text" name="username" autocomplete="on" placeholder="Username" required class="input-field-form">
+                <input type="password" name="password" autocomplete="on" placeholder="Password" required class="input-field-form">
+                <input type="submit" class="button-form" value="Log In" />
+            </form>
+        </div>
+    </section>
+{% endblock %}

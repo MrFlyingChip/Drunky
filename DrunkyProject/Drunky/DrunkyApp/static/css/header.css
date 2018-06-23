@@ -9,8 +9,8 @@ header{
 	max-width: 1000px;
 	display: flex;
 	flex-wrap: nowrap;
-	-webkit-justify-content: space-around; /* Safari */		
- 	justify-content: space-around;
+	-webkit-justify-content: space-around; /* Safari */
+	justify-content: space-between;
 }
 
 .nav-container{
@@ -27,7 +27,7 @@ header{
 
 .nav-container-aside-right img{
 	display: inline-flex;
-	height: 30px; 
+	height: 30px;
 	padding: 10px 5px;
 }
 

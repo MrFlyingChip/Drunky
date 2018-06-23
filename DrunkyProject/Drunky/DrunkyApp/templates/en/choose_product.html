@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Drunky - {{ product_name }}{% endblock %}
+
+{% block main %}
+    <p class="header-text-24pt">{{ product_name }}</p>
+    <section>
+        {% if recommended_products.count > 0 %}
+            <a href="drinks.html"><p class="header-text-18pt hover-text">Recommended {{ product_name }}</p></a>
+            <div class="main-container" style="width: 100%; justify-content: space-around;">
+                {% for product in recommended_products %}
+                    <a href="kek">
+                        <div class="product-container">
+                            <div class="product-image"
+                                 style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
+                            <div class="product-description">
+                                <p class="product-name">{{ product.name }}</p>
+                                <p class="product-rating">{{ product.likes }} likes</p>
+                                <p class="product-rating">{{ product.comments.count }} comments</p>
+                            </div>
+
+                        </div>
+                    </a>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if popular_products.count > 0 %}
+            <a href="drinks.html"><p class="header-text-18pt hover-text">Popular {{ product_name }}</p></a>
+            <div class="main-container" style="width: 100%; justify-content: space-around;">
+                {% for product in popular_products %}
+                    <a href="kek">
+                        <div class="product-container">
+                            <div class="product-image"
+                                 style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
+                            <div class="product-description">
+                                <p class="product-name">{{ product.name }}</p>
+                                <p class="product-rating">{{ product.likes }} likes</p>
+                                <p class="product-rating">{{ product.comments.count }} comments</p>
+                            </div>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+            <a href="/drinks/"><p class="header-text-18pt hover-text">All {{ product_name }}</p></a>
+            <div class="main-container" style="width: 100%; justify-content: space-around;">
+                {% for product in all_products %}
+                    <a href="kek">
+                        <div class="product-container">
+                            <div class="product-image"
+                                 style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
+                            <div class="product-description">
+                                <p class="product-name">{{ product.name }}</p>
+                                <p class="product-rating">{{ product.likes }} likes</p>
+                                <p class="product-rating">{{ product.comments.count }} comments</p>
+                            </div>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+
+    </section>
+{% endblock %}

@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 class Image(models.Model):
     image = models.ImageField()
 
+    def __str__(self):
+        return self.image.name
 
 class Dish(models.Model):
     name = models.CharField(max_length=50)
@@ -68,9 +70,9 @@ class Product(models.Model):
     description = models.CharField(max_length=1000)
     alcohol = models.FloatField(default=0)
     likes = models.IntegerField(default=0)
-    images = models.ManyToManyField(Image)
-    dishes = models.ManyToManyField(Dish)
-    comments = models.ManyToManyField(Comment)
+    images = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    dishes = models.ManyToManyField(Dish, blank=True)
+    comments = models.ManyToManyField(Comment, blank=True)
 
     def __str__(self):
         return self.name
@@ -92,7 +94,7 @@ class Bar(models.Model):
     description = models.CharField(max_length=1000)
     likes = models.IntegerField(default=0)
     images = models.ManyToManyField(Image)
-    comments = models.ManyToManyField(Comment)
+    comments = models.ManyToManyField(Comment, blank=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=100)
@@ -104,10 +106,10 @@ class Bar(models.Model):
 
 
 class Account(User):
-    photo = models.ForeignKey(Image, on_delete=models.CASCADE)
-    favouriteDrinks = models.ManyToManyField(Drink)
-    favouriteCocktails = models.ManyToManyField(Cocktail)
-    favouriteBars = models.ManyToManyField(Bar)
+    photo = models.ForeignKey(Image, on_delete=models.CASCADE, default=None, null=True)
+    favouriteDrinks = models.ManyToManyField(Drink, default=None, blank=True)
+    favouriteCocktails = models.ManyToManyField(Cocktail,default=None, blank=True)
+    favouriteBars = models.ManyToManyField(Bar, default=None, blank=True)
 
 
 

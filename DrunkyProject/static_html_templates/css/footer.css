@@ -1,6 +1,8 @@
 footer{
 	width: 100%;
 	background-color: black;
+	flex: 0 0 auto;
+	height: 180px;
 }
 
 .footer-menu{
@@ -10,7 +12,7 @@ footer{
 	flex-wrap: nowrap;
 	-webkit-justify-content: space-around; /* Safari */
  	justify-content: space-around;
-	height: 180px;
+	
 	text-align: center;
 }
 

@@ -7,6 +7,7 @@
 	background-color: black;
 	color: white;
 	margin: 5px 30px;
+	outline:none;
 }
 
 .button-form:hover{
@@ -26,6 +27,7 @@
 	width: 200px;
 	margin: 5px 30px;
 	padding-left: 5px;
+	outline:none;
 }
 
 .form-header{
@@ -34,52 +36,65 @@
 	font-weight: bold;
 }
 
-.input-form{
-	padding-left: 20px;
+
+.input-select{
+	border: 2px solid black;
+	font-size: 12pt;
+	margin: 10px 0px;
+	width: 150px;
+	padding-left: 5px;
+	outline:none;
+}
+
+.search{
+	width: 150px;
+	height: 30px;
+	margin: 10px 0px;
 }
 
 .checkbox{
 	display: block;
+	padding: 5px 10px;
 }
 .checkbox input {
-  display: none
+	display: none
 }
 .checkbox-text {
-  position: relative;
-  cursor: pointer;
-  background-color: white;
-  padding-left: 30px;
-  
+	position: relative;
+	cursor: pointer;
+	background-color: white;
+	padding-left: 30px;
+
 }
 
 .checkbox-text:hover {
-  color:#87433c;
+	color:#87433c;
 }
 .checkbox-text:before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border: 2px solid black;
-  background-color: white;
+	content: '';
+	position: absolute;
+	top: -4px;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	border: 2px solid black;
+	background-color: white;
 }
 .checkbox-text:after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 0px;
-  width: 20px;
-  height: 20px;
+	content: '';
+	position: absolute;
+	top: -4px;
+	left: 0px;
+	width: 20px;
+	height: 20px;
 }
 .checkbox input:checked + .checkbox-text:before {
-  background: #87433c;
+	background: #87433c;
 }
 .checkbox input:checked + .checkbox-text:after {
-  left: 0px;
+	left: 0px;
 }
 .checkbox input:focus + .checkbox-text:before {
- background-color: #87433c;
+	background-color: #87433c;
 }
 

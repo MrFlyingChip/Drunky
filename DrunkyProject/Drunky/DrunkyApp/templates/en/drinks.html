@@ -3,17 +3,64 @@
 {% block title %}Drunky - drinks{% endblock %}
 
 {% block main %}
-<section class="container">
-    <div class="column">
-        <form>
-            {% for drinkType in drinkTypes %}
-            <label class="checkbox">
-                <input type="checkbox" />
-                <span class="checkbox-text">{{ drinkType.name }}</span>
-            </label>
-            {% endfor %}
-        </form>
-    </div>
-    <div class="column"></div>
-</section>
+    <p class="header-text-24pt">Drinks</p>
+    <section class="container">
+        <div class="filters">
+            <form class="input-form" method="get">
+
+                <input type="text" name="search" placeholder="Search drinks" class="input-field-form search">
+                <p class="form-header" style="margin-left:0px">Sort by:</p>
+                <select class="input-select" name="sort">
+                    <option>
+                        None
+                    </option>
+                    <option>
+                        Popularity
+                    </option>
+                </select>
+                {% if auth %}
+                <label class="checkbox">
+                    <input type="checkbox" name="Favourites"/>
+                    <span class="checkbox-text">Search in favourites</span>
+                </label>
+                {% endif %}
+                <p class="form-header" style="margin-left:0px">Filter:</p>
+                <div class="drop-down-menu">
+                    <span class="drop-down-title" onclick="dropdown(this)">Drink types</span>
+                    <div class="drop-down-content">
+                        {% for drinkType in drinkTypes %}
+                            <label class="checkbox">
+                                <input type="checkbox" name="{{ drinkType }}"/>
+                                <span class="checkbox-text">{{ drinkType }}</span>
+                            </label>
+                        {% endfor %}
+                        <p class="drop-down-close" onclick="closeDropdown(this)">Close</p>
+                    </div>
+                </div>
+                <button class="button-form">Apply</button>
+            </form>
+        </div>
+
+        {% if all_products.count > 0 %}
+            <div class="main-container">
+                {% for product in all_products %}
+                    <a href="kek">
+                        <div class="product-container">
+                            <div class="product-image"
+                                 style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
+                            <div class="product-description">
+                                <p class="product-name">{{ product.name }}</p>
+                                <p class="product-rating">{{ product.likes }} likes</p>
+                                <p class="product-rating">{{ product.comments.count }} comments</p>
+                            </div>
+
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-normal">No drinks were found!</p>
+        {% endif %}
+
+    </section>
 {% endblock %}

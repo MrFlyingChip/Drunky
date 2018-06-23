@@ -1,0 +1,88 @@
+.main-container{
+    display: flex;
+    width: 700px;
+    flex-wrap: wrap;
+}
+
+.product-container{
+    margin: 10px;
+    width: 200px;
+    height: 300px;
+    flex-shrink: 0;
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: flex-end;
+    justify-content: flex-end;
+}
+
+.product-container:hover{
+    border: 1px #A4A4A4 solid;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    padding: 0px;
+}
+
+.product-image{
+    width: 200px;
+    display: inline-block;
+    height: 200px;
+    vertical-align: bottom;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.product-description{
+    height: 100px;
+}
+
+a{
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.product-name{
+    color: black;
+    text-align: center;
+    font-size: 14pt;
+}
+
+.product-rating{
+    color: #595959;
+    font-size: 12pt;
+}
+
+.product-page-image{
+    width: 100%;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.ingredient-image{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border: 1px solid #A4A4A4;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+}
+
+.padding-50{
+    padding: 50px;
+}
+
+.underlined-text{
+    text-decoration: underline;
+}
+
+.product-composition{
+    display: flex;
+    justify-content: space-between;
+    vertical-align: bottom;
+}

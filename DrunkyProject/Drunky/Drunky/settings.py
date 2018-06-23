@@ -63,6 +63,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -120,6 +121,8 @@ USE_TZ = True
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images/')
+MEDIA_URL = '/images/'
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, '../DrunkyApp/static/'),)
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, '../DrunkyApp/templates'),
