@@ -11,12 +11,10 @@
                 <input type="text" name="search" placeholder="Search drinks" class="input-field-form search">
                 <p class="form-header" style="margin-left:0px">Sort by:</p>
                 <select class="input-select" name="sort">
-                    <option>
-                        None
-                    </option>
-                    <option>
-                        Popularity
-                    </option>
+                    <option>None</option>
+                    {% for sort_type in sortTypes %}
+                        <option>{{ sort_type }}</option>
+                    {% endfor %}
                 </select>
                 {% if auth %}
                 <label class="checkbox">

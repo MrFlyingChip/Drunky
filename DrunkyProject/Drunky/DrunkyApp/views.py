@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login as auth_login
 from .models import *
+from .sort import sort_query_set
+from .search import search_in_queryset
 
 
 def index(request):
@@ -12,26 +14,42 @@ def index(request):
 def drinks(request):
     auth = request.user.is_authenticated
     drinkTypes = DrinkType.objects.all()
+    sortTypes = SortType.objects.all()
     if request.GET:
         if ('Favourites' in request.GET) and (request.GET['Favourites'] == 'on'):
             acc = Account.objects.get(username=request.user.username)
             all_drinks = acc.favouriteDrinks.all()
         else:
             all_drinks = Drink.objects.all()
-    filter =
-    for type in drinkTypes:
-        if(type in request.GET) and (request.GET[type] == 'on'):
-
+        all_drinks = search_in_queryset(request.GET['search'], all_drinks)
+        filter = False
+        filter_drinks = Drink.objects.none()
+        for type in drinkTypes:
+            if(type.name in request.GET) and (request.GET[type.name] == 'on'):
+                filter = True
+                drinks_of_type = all_drinks.filter(drinkType=type)
+                filter_drinks = filter_drinks.union(drinks_of_type)
+        if not filter:
+            filter_drinks = all_drinks
+        filter_drinks = sort_query_set(request.GET['sort'], filter_drinks)
     else:
         filter_drinks = Drink.objects.all()
-    return render(request, 'en/drinks.html', {'drinkTypes': drinkTypes, 'auth': auth, 'all_products': filter_drinks,})
+        filter_drinks = sort_query_set('?', filter_drinks)
+    return render(request, 'en/drinks.html', {'drinkTypes': drinkTypes,
+                                              'auth': auth,
+                                              'all_products': filter_drinks,
+                                              'sortTypes': sortTypes})
 
 
 def choose_drinks(request):
     auth = request.user.is_authenticated
     product_name = 'Drinks'
-    all_drinks = Drink.objects.all()[0:3]
-    return render(request, 'en/choose_product.html', {'product_name': product_name, 'all_products': all_drinks, 'auth': auth})
+    all_drinks = sort_query_set('?', Drink.objects.all())[0:4]
+    popular_drinks = sort_query_set('By popularity (descending)', Drink.objects.all())[0:4]
+    return render(request, 'en/choose_product.html', {'product_name': product_name,
+                                                      'all_products': all_drinks,
+                                                      'auth': auth,
+                                                      'popular_products': popular_drinks})
 
 
 def cocktails(request):

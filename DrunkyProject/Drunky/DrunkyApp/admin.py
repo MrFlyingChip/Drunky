@@ -15,4 +15,4 @@ admin.site.register(Cocktail)
 admin.site.register(Ingredient)
 admin.site.register(Account)
 admin.site.register(Bar)
-
+admin.site.register(SortType)

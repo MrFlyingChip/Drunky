@@ -36,6 +36,12 @@
 
 .product-description{
     height: 100px;
+    width: 200px;
+
+}
+
+.product-description .product-rating{
+    padding: 0px 10px;
 }
 
 a{

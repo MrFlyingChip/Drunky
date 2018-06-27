@@ -6,7 +6,7 @@ header{
 
 .menu{
 	margin: 0 auto;
-	max-width: 1000px;
+	max-width: 1080px;
 	display: flex;
 	flex-wrap: nowrap;
 	-webkit-justify-content: space-around; /* Safari */
