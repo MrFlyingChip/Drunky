@@ -40,6 +40,10 @@
 
 }
 
+.product-description .product-name{
+    height: 50px;
+}
+
 .product-description .product-rating{
     padding: 0px 10px;
 }

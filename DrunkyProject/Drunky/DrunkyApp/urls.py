@@ -15,4 +15,5 @@ urlpatterns = [
     path('exit/', views.exit, name='exit'),
     path('account/', views.account, name='account'),
     path('choose_drinks/', views.choose_drinks, name='choose_drinks'),
+    path('popular_drinks/', views.popular_drinks, name='popular_drinks'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

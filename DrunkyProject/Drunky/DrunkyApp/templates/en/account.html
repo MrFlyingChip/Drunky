@@ -9,7 +9,7 @@
     <p>Password: </p>
 
     {% if favouriteDrinks.count > 0 %}
-        <a href="drinks.html"><p class="header-text-18pt hover-text">Favourite Drinks</p></a>
+        <a href="/drinks/?search=&sort=None&Favourites=on"><p class="header-text-18pt hover-text">Favourite Drinks</p></a>
         <div class="main-container" style="width: 100%; justify-content: space-around;">
             {% for product in favouriteDrinks %}
                 <a href="kek">
