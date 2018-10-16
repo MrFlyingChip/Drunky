@@ -3,16 +3,21 @@
 {% block title %}Drunky - account{% endblock %}
 
 {% block main %}
-    <img src="{{ MEDIA_URL }}{{ account.photo }}"/>
-    <p>Username: {{ account.username }}</p>
-    <p>Email: {{ account.email }}</p>
-    <p>Password: </p>
-
+    <section class="container">
+        <div class="column">
+            <img src="{{ MEDIA_URL }}{{ account.photo }}" class="user_photo"/>
+        </div>
+        <div class="column">
+            <p><span class="bold-text">Username: </span>{{ account.username }}</p>
+            <p><span class="bold-text">Email: </span>{{ account.email }}</p>
+            <p><span class="bold-text">Password: </span></p>
+        </div>
+    </section>
     {% if favouriteDrinks.count > 0 %}
         <a href="/drinks/?search=&sort=None&Favourites=on"><p class="header-text-18pt hover-text">Favourite Drinks</p></a>
         <div class="main-container" style="width: 100%; justify-content: space-around;">
             {% for product in favouriteDrinks %}
-                <a href="kek">
+                <a href="{% url 'drink_detail' product.id %}">
                     <div class="product-container">
                         <div class="product-image"
                              style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
@@ -28,7 +33,7 @@
         </div>
     {% else %}
         <p class="header-text-18pt">Favourite Drinks</p>
-        <p class="text-normal">You don`t have favourite drinks! <a href="/choose_drinks/" class="hover-text">Add
+        <p class="text-normal">You don`t have favourite drinks! <a href="/choose_drinks/">Add
             some!</a></p>
     {% endif %}
 
@@ -52,7 +57,7 @@
         </div>
     {% else %}
         <p class="header-text-18pt">Favourite Cocktails</p>
-        <p class="text-normal">You don`t have favourite cocktails! <a href="/choose_cocktails/" class="hover-text">Add
+        <p class="text-normal">You don`t have favourite cocktails! <a href="/choose_cocktails/">Add
             some!</a></p>
     {% endif %}
 
@@ -76,7 +81,7 @@
         </div>
     {% else %}
         <p class="header-text-18pt">Favourite Bars</p>
-        <p class="text-normal">You don`t have favourite bars! <a href="/choose_bars/" class="hover-text">Add
+        <p class="text-normal">You don`t have favourite bars! <a href="/choose_bars/">Add
             some!</a></p>
     {% endif %}
 {% endblock %}

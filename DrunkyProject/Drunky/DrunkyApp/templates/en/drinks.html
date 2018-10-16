@@ -18,7 +18,8 @@
                 </select>
                 {% if auth %}
                 <label class="checkbox">
-                    <input type="checkbox" name="Favourites" checked="true"/>
+                    <input type="checkbox" name="Favourites"/>
+                    <span class="checkbox-custom"></span>
                     <span class="checkbox-text">Search in favourites</span>
                 </label>
                 {% endif %}
@@ -29,6 +30,7 @@
                         {% for drinkType in drinkTypes %}
                             <label class="checkbox">
                                 <input type="checkbox" name="{{ drinkType }}"/>
+                                <span class="checkbox-custom"></span>
                                 <span class="checkbox-text">{{ drinkType }}</span>
                             </label>
                         {% endfor %}
@@ -42,7 +44,7 @@
         {% if all_products.count > 0 %}
             <div class="main-container">
                 {% for product in all_products %}
-                    <a href="kek">
+                    <a href="{% url 'drink_detail' product.id %}">
                         <div class="product-container">
                             <div class="product-image"
                                  style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>

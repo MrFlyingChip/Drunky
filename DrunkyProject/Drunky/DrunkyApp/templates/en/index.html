@@ -2,4 +2,59 @@
 
 {% block title %}Drunky - main{% endblock %}
 
-{% block main %}{% endblock %}
+{% block main %}
+    <p class="header-text-18pt">Let`s try <a href="/popular_drinks">the most popular drinks!</a></p>
+    <div class="main-container" style="width: 100%; justify-content: space-around;">
+        {% for drink in popular_drinks %}
+            <a href="{% url 'drink_detail' drink.id %}">
+                <div class="product-container">
+                    <div class="product-image"
+                         style="background-image: url({{ MEDIA_URL }}{{ drink.images }});"></div>
+                    <div class="product-description">
+                        <p class="product-name">{{ drink.name }}</p>
+                        <p class="product-rating">{{ drink.likes }} likes</p>
+                        <p class="product-rating">{{ drink.comments.count }} comments</p>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <p class="header-text-18pt">Cook <a href="/popular_cocktails">the best cocktails!</a></p>
+    <div class="main-container" style="width: 100%; justify-content: space-around;">
+        {% for cocktail in popular_cocktails %}
+            <a href="{% url 'cocktail_detail' cocktail.id %}">
+                <div class="product-container">
+                    <div class="product-image"
+                         style="background-image: url({{ MEDIA_URL }}{{ cocktail.images }});"></div>
+                    <div class="product-description">
+                        <p class="product-name">{{ cocktail.name }}</p>
+                        <p class="product-rating">{{ cocktail.likes }} likes</p>
+                        <p class="product-rating">{{ cocktail.comments.count }} comments</p>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    <p class="header-text-18pt">Visit and taste the best drinks <a href="/popular_bars">the most popular bars!</a></p>
+    <div class="main-container" style="width: 100%; justify-content: space-around;">
+        {% for bar in popular_bars %}
+            <a href="{% url 'drink_detail' bar.id %}">
+                <div class="product-container">
+                    <div class="product-image"
+                         style="background-image: url({{ MEDIA_URL }}{{ bar.images }});"></div>
+                    <div class="product-description">
+                        <p class="product-name">{{ bar.name }}</p>
+                        <p class="product-rating">{{ bar.likes }} likes</p>
+                        <p class="product-rating">{{ bar.comments.count }} comments</p>
+                    </div>
+
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+{% endblock %}

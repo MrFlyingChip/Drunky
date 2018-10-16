@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Drunky - drinks{% endblock %}
+
+{% block main %}
+    <p class="header-text-24pt">{{ drink.name }}</p>
+    <div class="product-page-image" style="background-image: url({{ MEDIA_URL }}{{ drink.images }})"></div>
+    <div class="comment">
+        {% load staticfiles %}
+        {% if auth %}
+            {% if liked %}
+                <form method="post" action="{% url "unlike_drink" drink.id%}">
+                    {% csrf_token %}
+                    <input type="submit" class="button-background" value="" style="background-image: url({% static 'images/heart-liked.png'%})"/>
+                </form>
+            {% else %}
+                <form method="post" action="{% url "like_drink" drink.id%}">
+                    {% csrf_token %}
+                    <input type="submit" class="button-background" value="" style="background-image: url({% static 'images/heart.png'%})"/>
+                </form>
+            {% endif %}
+            <p>{{ drink.likes }} likes</p>
+            {% if favourite %}
+                <form method="post" action="{% url "remove_favourite_drink" drink.id%}">
+                    {% csrf_token %}
+                    <input type="submit" class="button-background" value="" style="background-image: url({% static 'images/star-filled.png'%})"/>
+                </form>
+            {% else %}
+                <form method="post" action="{% url "add_to_favourites_drink" drink.id%}">
+                    {% csrf_token %}
+                    <input type="submit" class="button-background" value="" style="background-image: url({% static 'images/star.png'%})"/>
+                </form>
+            {% endif %}
+        {% else %}
+            <img src="{% static 'images/heart.png' %}" class="button-background">
+            <img src="{% static 'images/star.png' %}" class="button-background">
+        {% endif %}
+    </div>
+
+
+    <section class="product-receipt">
+        <p class="header-text-18pt underlined-text" >Description</p>
+        <p class="text-normal">{{ drink.description }}</p>
+    </section>
+    <section class="comments">
+        {% if auth %}
+            <form method="post" action="{% url "leave_comment_drink" drink.id%}">
+                {% csrf_token %}
+                <textarea required maxlength="1500" name="comment_text" class="input-comment" placeholder="Leave comment"></textarea>
+                <input type="submit" class="button-form left-button" value="Leave" />
+            </form>
+        {% else %}
+            <p>You`re not registered or logged in! Please, <a href="/login">sigh up or log in</a> to leave comments!</p>
+        {% endif %}
+        <p class="header-text-18pt underlined-text" >Comments ({{ drink.comments.count }})</p>
+        {% for comment in comments %}
+            <div class="comment">
+
+                <div class="avatar" style="background-image: url({{ MEDIA_URL }}{{ comment.account.photo }})"></div>
+                <div class="column">
+                    <p class="nickname">{{ comment.account.username }}  <span class="comment_date">{{ comment.comment.date }}</span></p>
+                    <p class="comment_text">{{ comment.comment.text }}</p>
+                </div>
+            </div>
+        {% endfor %}
+
+    </section>
+{% endblock %}

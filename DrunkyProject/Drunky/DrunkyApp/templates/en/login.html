@@ -22,6 +22,7 @@
             <form method="post" action="{% url "login" %}">
                 {% csrf_token %}
                 <p class="form-header">Have an account? Log in</p>
+                <p class="form-error-text">{{ error }}</p>
                 <input type="text" name="username" autocomplete="on" placeholder="Username" required class="input-field-form">
                 <input type="password" name="password" autocomplete="on" placeholder="Password" required class="input-field-form">
                 <input type="submit" class="button-form" value="Log In" />

@@ -6,10 +6,10 @@
     <p class="header-text-24pt">{{ product_name }}</p>
     <section>
         {% if recommended_products.count > 0 %}
-            <a href="drinks.html"><p class="header-text-18pt hover-text">Recommended {{ product_name }}</p></a>
+            <p class="header-text-18pt"><a href="drinks.html">Recommended {{ product_name }}</a></p>
             <div class="main-container" style="width: 100%; justify-content: space-around;">
                 {% for product in recommended_products %}
-                    <a href="kek">
+                    <a href="{% url product_url_detail product.id %}">
                         <div class="product-container">
                             <div class="product-image"
                                  style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
@@ -26,10 +26,10 @@
             </div>
         {% endif %}
         {% if popular_products.count > 0 %}
-            <a href="/popular_drinks"><p class="header-text-18pt hover-text">Popular {{ product_name }}</p></a>
+            <p class="header-text-18pt"><a href={{"/popular_"|add:product_name|lower}}>Popular {{ product_name }}</a></p>
             <div class="main-container" style="width: 100%; justify-content: space-around;">
                 {% for product in popular_products %}
-                    <a href="kek">
+                    <a href="{% url product_url_detail product.id %}">
                         <div class="product-container">
                             <div class="product-image"
                                  style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
@@ -45,10 +45,10 @@
             </div>
         {% endif %}
 
-            <a href="/drinks/"><p class="header-text-18pt hover-text">All {{ product_name }}</p></a>
+            <p class="header-text-18pt"><a href={{"/"|add:product_name|lower}}>All {{ product_name }}</a></p>
             <div class="main-container" style="width: 100%; justify-content: space-around;">
                 {% for product in all_products %}
-                    <a href="kek">
+                    <a href="{% url product_url_detail product.id %}">
                         <div class="product-container">
                             <div class="product-image"
                                  style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>

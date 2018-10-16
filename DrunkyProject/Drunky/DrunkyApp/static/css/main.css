@@ -46,6 +46,15 @@ section{
 	color: #87433c;
 }
 
+a{
+	color: #87433c;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #A4A4A4;
+}
+
 .container{
 	display: flex;
 	justify-content: space-between;
@@ -53,7 +62,6 @@ section{
 
 .column{
 	width: 45%;
-
 }
 
 .text-normal-18pt{
@@ -74,3 +82,7 @@ section{
 	padding-top: 70px;
 }
 
+.bold-text{
+	font-size: 14pt;
+	font-weight: bold;
+}

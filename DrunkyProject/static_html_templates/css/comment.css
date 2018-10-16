@@ -1,0 +1,29 @@
+.comment{
+    display: flex;
+    padding-top: 20px;
+}
+
+.comment .column{
+    padding-left: 20px;
+    width: 90%;
+}
+
+.nickname{
+    font-size: 14pt;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.comment_text{
+    font-size: 12pt;
+}
+
+.avatar{
+    width: 75px;
+    height: 75px;
+    margin: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+}
