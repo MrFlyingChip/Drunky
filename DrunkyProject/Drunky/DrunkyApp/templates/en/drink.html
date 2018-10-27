@@ -33,6 +33,7 @@
             {% endif %}
         {% else %}
             <img src="{% static 'images/heart.png' %}" class="button-background">
+            <p>{{ drink.likes }} likes</p>
             <img src="{% static 'images/star.png' %}" class="button-background">
         {% endif %}
     </div>
@@ -42,6 +43,21 @@
         <p class="header-text-18pt underlined-text" >Description</p>
         <p class="text-normal">{{ drink.description }}</p>
     </section>
+    
+    {% for product in cocktails %}
+        <a href="{% url 'drink_detail' product.id %}">
+            <div class="product-container">
+                <div class="product-image"
+                    style="background-image: url({{ MEDIA_URL }}{{ product.images }});"></div>
+                <div class="product-description">
+                    <p class="product-name">{{ product.name }}</p>
+                    <p class="product-rating">{{ product.likes }} likes</p>
+                    <p class="product-rating">{{ product.comments.count }} comments</p>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+
     <section class="comments">
         {% if auth %}
             <form method="post" action="{% url "leave_comment_drink" drink.id%}">

@@ -90,11 +90,19 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def getComments(self):
+        comments = self.comments.all()
+        comment_to_account = CommentToAccount.objects.filter(comment__in=comments)
+        return comment_to_account
 
 class Drink(Product):
     drinkType = models.ForeignKey(DrinkType, on_delete=models.CASCADE)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
+    @staticmethod
+    def addCommentToDrink(drink_id, comment):
+        drink = Drink.objects.get(pk=drink_id)
+        drink.comments.add(comment)
 
 class DrinkTypeMeasure(models.Model):
     drinksType = models.ForeignKey(DrinkType, on_delete=models.CASCADE)
@@ -148,13 +156,45 @@ class Account(User):
     favouriteCocktails = models.ManyToManyField(Cocktail,default=None, blank=True, related_name='favourite_cocktails')
     favouriteBars = models.ManyToManyField(Bar, default=None, blank=True, related_name='favourite_bars')
 
+    def addProductToArray(self, model, model_id, array):
+        product = model.objects.get(pk=model_id)
+        if(product not in array.all()):
+            array.add(product)
 
+    def removeProductFromArray(self, model, model_id, array):
+        product = model.objects.get(pk=model_id)
+        if(product in array.all()):
+            array.remove(product)
+
+    def likeProduct(self, model, model_id, array):
+        product = model.objects.get(pk=model_id)
+        if(product not in array.all()):
+            product.likes += 1
+            product.save(update_fields=['likes'])
+            array.add(product)
+
+    def unlikeProduct(self, model, model_id, array):
+        product = model.objects.get(pk=model_id)
+        if(product in array.all()):
+            product.likes -= 1
+            product.save(update_fields=['likes'])
+            array.remove(product)
+    
 class CommentToAccount(models.Model):
     account = models.ForeignKey(Account, null=False, on_delete=models.CASCADE)
     comment = models.ForeignKey(Comment, null=False, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.account.username + ": " + self.comment.text
+    
+    @staticmethod
+    def createComment(comment_text, username):
+        new_comment = Comment(text=comment_text)
+        new_comment.save()
+        acc = Account.objects.get(username=username)
+        new_comment_to_acc = CommentToAccount(comment=new_comment, account=acc)
+        new_comment_to_acc.save()
+        return new_comment
 
 
 class SortType(models.Model):

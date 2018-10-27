@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login as auth_login
-from django.http import Http404
+from django.http import Http404, HttpResponseServerError
 from django.http import HttpResponseRedirect
 from .models import *
 from .sort import sort_query_set
@@ -51,18 +51,16 @@ def drink_detail(request, drink_id):
                 liked = True
             if drink in acc.favouriteDrinks.all():
                 favourite = True
-        comments = drink.comments.all()
-        comment_to_account = CommentToAccount.objects.none()
-        for comment in comments:
-            comment_to_union = CommentToAccount.objects.filter(comment=comment)
-            comment_to_account = comment_to_account.union(comment_to_union)
+        drinksM = DrinkTypeMeasure.objects.filter(drinksType=drink.drinkType)
+        drink_coctails = Cocktail.objects.filter(drinksType_in=drinksM)
     except Drink.DoesNotExist:
         raise Http404("Drink does not exist")
     return render(request, 'en/drink.html', {'drink': drink,
                                              'auth': auth,
-                                             'comments': comment_to_account,
+                                             'comments': drink.getComments(),
                                              'liked': liked,
-                                             'favourite': favourite})
+                                             'favourite': favourite,
+                                             'cocktails': drink_coctails})
 
 
 def drinks(request):
@@ -185,6 +183,7 @@ def bars(request):
 def about(request):
     return HttpResponse("Hello about!")
 
+#account actions
 
 def exit(request):
     logout(request)
@@ -227,79 +226,69 @@ def account(request):
     auth = request.user.is_authenticated
     if auth:
         acc = Account.objects.get(username=request.user.username)
-        favouriteDrinks = acc.favouriteDrinks.all()[0:3]
-        favouriteCocktails = acc.favouriteCocktails.all()[0:3]
-        favouriteBars = acc.favouriteBars.all()[0:3]
+        favouriteDrinks = acc.favouriteDrinks.all()[0:4]
+        favouriteCocktails = acc.favouriteCocktails.all()[0:4]
+        favouriteBars = acc.favouriteBars.all()[0:4]
         return render(request, 'en/account.html', {'account': acc, 'auth': auth,
                                                    'favouriteDrinks': favouriteDrinks,
                                                    'favouriteCocktails': favouriteCocktails,
                                                    'favouriteBars': favouriteBars})
     else:
         return redirect("/login/")
-
-
-def leave_comment_drink(request, drink_id):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    if request.POST:
-        curr_drink = Drink.objects.get(pk=drink_id)
-        curr_drink.comments.add(leave_comment(request))
-    return redirect("/drinks/" + str(drink_id))
-
-
-def like_drink(request, drink_id):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    if request.POST:
-        acc = Account.objects.get(username=request.user.username)
-        curr_drink = Drink.objects.get(pk=drink_id)
-        if curr_drink not in acc.likedDrinks.all():
-            curr_drink.likes += 1
-            curr_drink.save(update_fields=['likes'])
-            acc.likedDrinks.add(curr_drink)
-    return redirect("/drinks/" + str(drink_id))
-
-
-def unlike_drink(request, drink_id):
-    if not request.user.is_authenticated:
-        return redirect("/login/")
-    if request.POST:
-        acc = Account.objects.get(username=request.user.username)
-        curr_drink = Drink.objects.get(pk=drink_id)
-        if curr_drink in acc.likedDrinks.all():
-            curr_drink.likes -= 1
-            curr_drink.save(update_fields=['likes'])
-            acc.likedDrinks.remove(curr_drink)
-    return redirect("/drinks/" + str(drink_id))
-
-
+    
+#social actions with drinks
 def add_to_favourites_drink(request, drink_id):
     if not request.user.is_authenticated:
         return redirect("/login/")
     if request.POST:
-        acc = Account.objects.get(username=request.user.username)
-        curr_drink = Drink.objects.get(pk=drink_id)
-        if curr_drink not in acc.favouriteDrinks.all():
-            acc.favouriteDrinks.add(curr_drink)
+        try:
+            account = Account.objects.get(username=request.user.username)
+            account.addProductToArray(Drink, drink_id, account.favouriteDrinks)
+        except:
+            raise HttpResponseServerError()
     return redirect("/drinks/" + str(drink_id))
-
 
 def remove_favourite_drink(request, drink_id):
     if not request.user.is_authenticated:
         return redirect("/login/")
     if request.POST:
-        acc = Account.objects.get(username=request.user.username)
-        curr_drink = Drink.objects.get(pk=drink_id)
-        if curr_drink in acc.favouriteDrinks.all():
-            acc.favouriteDrinks.remove(curr_drink)
+        try:
+            account = Account.objects.get(username=request.user.username)
+            account.removeProductFromArray  (Drink, drink_id, account.favouriteDrinks)
+        except:
+            raise HttpResponseServerError()
+    return redirect("/drinks/" + str(drink_id)) 
+
+def like_drink(request, drink_id):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    if request.POST:
+        try:
+            account = Account.objects.get(username=request.user.username)
+            account.likeProduct(Drink, drink_id, account.likedDrinks)
+        except:
+            raise HttpResponseServerError()
     return redirect("/drinks/" + str(drink_id))
 
+def unlike_drink(request, drink_id):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    if request.POST:
+        try:
+            account = Account.objects.get(username=request.user.username)
+            account.unlikeProduct(Drink, drink_id, account.likedDrinks)
+        except:
+            raise HttpResponseServerError()
+    return redirect("/drinks/" + str(drink_id))
 
-def leave_comment(request):
-    comment_text = request.POST['comment_text']
-    new_comment = Comment(text=comment_text)
-    new_comment.save()
-    acc = Account.objects.get(username=request.user.username)
-    new_comment_to_acc = CommentToAccount(comment=new_comment, account=acc)
-    new_comment_to_acc.save()
-    return new_comment
+def leave_comment_drink(request, drink_id):
+    if not request.user.is_authenticated:
+        return redirect("/login/")
+    if request.POST:
+        comment_text = request.POST['comment_text']
+        username = request.user.username
+        new_comment = CommentToAccount.createComment(comment_text, username)
+        Drink.addCommentToDrink(drink_id, new_comment)
+    return redirect("/drinks/" + str(drink_id))
+
+#social actions with cocktails
